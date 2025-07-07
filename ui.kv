@@ -1,0 +1,91 @@
+#:kivy 2.1.0
+
+<GPSWidget>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            padding: '10dp'
+            spacing: '10dp'
+
+            Label:
+                id: lat_label
+                text: 'Lat: --'
+                size_hint_x: 0.4
+
+            Label:
+                id: lon_label
+                text: 'Lon: --'
+                size_hint_x: 0.4
+
+            Widget:
+                size_hint_x: 0.1
+
+            Canvas:
+                id: gnss_status_icon
+                size_hint_x: 0.1
+
+            # Using a colored rectangle as icon
+            Widget:
+                size_hint_x: 0.1
+                canvas:
+                    Color:
+                        rgba: root.gnss_connected_color
+                    Ellipse:
+                        pos: self.pos
+                        size: self.size
+
+        GridLayout:
+            id: grid
+            cols: root.grid_cols
+            rows: root.grid_rows
+            size_hint_y: 1
+
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            pos_hint: {'top': 1}
+            spacing: '10dp'
+            padding: '10dp'
+
+            Button:
+                text: 'Set Route A'
+                on_press: root.set_route_a()
+
+            Button:
+                text: 'Set Route B'
+                on_press: root.set_route_b()
+
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            pos_hint: {'bottom': 1}
+            padding: '10dp'
+
+            TextInput:
+                id: input_field
+                multiline: False
+                focus: False
+                on_focus: root.show_keyboard(self, self.focus)
+                size_hint_x: 0.6
+
+            Button:
+                text: 'Enter'
+                size_hint_x: 0.2
+                on_press: root.on_text_entered(input_field.text)
+
+            Button:
+                text: 'Toggle Mode'
+                size_hint_x: 0.2
+                on_press: root.toggle_mode()
+
+    # Placeholder for tractor sprites and other UI elements
